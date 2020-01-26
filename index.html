@@ -190,6 +190,7 @@
 						statusNotice.style.display = 'block';
 						break;
 					case 'hidden':
+						document.getElementById('status').style.display = 'none'; // Hide status before game starts
 						break;
 					default:
 						throw new Error('Invalid status mode');
