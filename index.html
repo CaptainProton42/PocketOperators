@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns='http://www.w3.org/1999/xhtml' lang='' xml:lang=''>
+
 <head>
 	<meta charset='utf-8' />
 	<meta name='viewport' content='width=device-width, user-scalable=no' />
 	<title></title>
 	<style type='text/css'>
-
 		body {
 			touch-action: none;
 			margin: 0;
@@ -48,7 +48,14 @@
 			justify-content: center;
 			align-items: center;
 			/* don't consume click events - make children visible explicitly */
-			visibility: hidden;
+			background-image: url("loading_screen.png");
+			background-color: #ffffff;
+			height: 100%;
+
+			/* Center and scale the image nicely */
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
 		}
 
 		#status-progress {
@@ -84,7 +91,7 @@
 			position: relative;
 		}
 
-		#status-indeterminate > div {
+		#status-indeterminate>div {
 			width: 4.5px;
 			height: 0;
 			border-style: solid;
@@ -93,15 +100,6 @@
 			transform-origin: center 21px;
 			position: absolute;
 		}
-
-		#status-indeterminate > div:nth-child(1) { transform: rotate( 22.5deg); }
-		#status-indeterminate > div:nth-child(2) { transform: rotate( 67.5deg); }
-		#status-indeterminate > div:nth-child(3) { transform: rotate(112.5deg); }
-		#status-indeterminate > div:nth-child(4) { transform: rotate(157.5deg); }
-		#status-indeterminate > div:nth-child(5) { transform: rotate(202.5deg); }
-		#status-indeterminate > div:nth-child(6) { transform: rotate(247.5deg); }
-		#status-indeterminate > div:nth-child(7) { transform: rotate(292.5deg); }
-		#status-indeterminate > div:nth-child(8) { transform: rotate(337.5deg); }
 
 		#status-notice {
 			margin: 0 100px;
@@ -113,22 +111,18 @@
 	</style>
 
 </head>
+
 <body>
 	<canvas id='canvas'>
 		HTML5 canvas appears to be unsupported in the current browser.<br />
 		Please try updating or use a different browser.
 	</canvas>
 	<div id='status'>
-		<div id='status-progress' style='display: none;' oncontextmenu='event.preventDefault();'><div id ='status-progress-inner'></div></div>
+		<div id='status-progress' style='display: none;' oncontextmenu='event.preventDefault();'>
+			<div id='status-progress-inner'></div>
+		</div>
 		<div id='status-indeterminate' style='display: none;' oncontextmenu='event.preventDefault();'>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
+			<img src=loading_text.png></img>
 		</div>
 		<div id='status-notice' class='godot' style='display: none;'></div>
 	</div>
@@ -140,7 +134,7 @@
 		var setStatusMode;
 		var setStatusNotice;
 
-		(function() {
+		(function () {
 
 			const EXECUTABLE_NAME = 'index';
 			const MAIN_PACK = 'index.pck';
@@ -181,7 +175,7 @@
 				[statusProgress, statusIndeterminate, statusNotice].forEach(elem => {
 					elem.style.display = 'none';
 				});
-				animationCallbacks = animationCallbacks.filter(function(value) {
+				animationCallbacks = animationCallbacks.filter(function (value) {
 					return (value != animateStatusIndeterminate);
 				});
 				switch (mode) {
@@ -206,12 +200,6 @@
 			function animateStatusIndeterminate(ms) {
 
 				var i = Math.floor(ms / INDETERMINATE_STATUS_STEP_MS % 8);
-				if (statusIndeterminate.children[i].style.borderTopColor == '') {
-					Array.prototype.slice.call(statusIndeterminate.children).forEach(child => {
-						child.style.borderTopColor = '';
-					});
-					statusIndeterminate.children[i].style.borderTopColor = '#dfdfdf';
-				}
 			}
 
 			setStatusNotice = function setStatusNotice(text) {
@@ -229,7 +217,7 @@
 			engine.setProgressFunc((current, total) => {
 
 				if (total > 0) {
-					statusProgressInner.style.width = current/total * 100 + '%';
+					statusProgressInner.style.width = current / total * 100 + '%';
 					setStatusMode('progress');
 					if (current === total) {
 						// wait for progress bar animation
@@ -263,5 +251,5 @@
 		})();
 	//]]></script>
 </body>
-</html>
 
+</html>
