@@ -61,6 +61,7 @@
 		#status-loading {
 			visibility: visible;
 			position: relative;
+			width: 15%;
 		}
 
 		#loading-text {
@@ -73,6 +74,11 @@
 			visibility: visible;
 			padding: 4px 6px;
 			visibility: visible;
+		}
+
+		#loading-text-image {
+			position: relative;
+			width: 100%;
 		}
 	</style>
 
@@ -89,7 +95,7 @@
 		</div>
 		<div id='status-loading' style='display: none;' oncontextmenu='event.preventDefault();'>
 			<div id='loading-text'>
-				<img src=loading_text.png></img>
+				<img id='loading-text-image' src=loading_text.png> </img>
 			</div>
 		</div>
 		<div id='status-notice' class='godot' style='display: none;'></div>
